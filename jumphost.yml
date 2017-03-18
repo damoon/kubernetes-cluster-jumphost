@@ -1,0 +1,17 @@
+---
+- name: bootstrap ubuntu
+  hosts: ubuntu
+  gather_facts: false
+  roles:
+    - role: ubuntu-bootstrap
+
+- name: configure ubuntu
+  hosts: ubuntu
+  roles:
+    - role: ubuntu-configure
+
+- name: setup jumphost
+  hosts: jumphost
+  roles:
+    - role: docker
+    - role: admin-tools

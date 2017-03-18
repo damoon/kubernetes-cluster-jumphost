@@ -1,0 +1,33 @@
+---
+- name: install tools
+  package: name={{ item }} state=present
+  with_items:
+    - vim
+    - emacs
+    - nano
+    - findutils
+    - tree
+    - tmux
+    - screen
+    - bash
+    - time
+    - make
+    - git
+    - curl
+    - wget
+    - rsync
+    - jq
+#    - docker-compose (use script)
+    - htop
+    - nload
+    - nmap
+# iostat is in sysstat
+    - sysstat
+    - atop
+    - ansible
+#    - rar
+#    - unrar
+    - zip
+    - unzip
+    - tar
+    - gzip

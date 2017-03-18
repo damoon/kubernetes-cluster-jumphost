@@ -1,0 +1,5 @@
+- name: download docker-compose mapper
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.11.2/run.sh
+    dest: /usr/local/bin/docker-compose
+    mode: 0555

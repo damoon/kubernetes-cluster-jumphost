@@ -1,0 +1,5 @@
+[all]
+jumphost ansible_connection=local
+
+[ubuntu]
+jumphost

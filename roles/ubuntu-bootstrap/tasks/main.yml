@@ -1,0 +1,14 @@
+---
+- name: Check if python is intstalled
+  raw: test -e /usr/bin/python || echo -n need_python
+  register: need_python
+  changed_when: false
+
+- name: Booleanize need_python
+  set_fact:
+    need_python={{need_python.stdout == "need_python"}}
+
+- name: Install Python 2
+  raw: sh -c "apt-get install python -y"
+  when: need_python
+
