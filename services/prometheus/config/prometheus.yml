@@ -1,0 +1,11 @@
+# prometheus.yml
+global:
+    scrape_interval: 5s
+    external_labels:
+        monitor: 'jumphost'
+scrape_configs:
+    - job_name: 'jumphost'
+      static_configs:
+          - targets: ['prometheus:9090', 'node-exporter:9100']
+rule_files:
+    - 'alert.rules'

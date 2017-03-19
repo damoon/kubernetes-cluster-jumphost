@@ -29,6 +29,10 @@ traefik: ##@services Install traefik.
 	docker-compose -p traefik -f services/traefik.yml up -d
 .PHONY: traefik
 
+prometheus: ##@services Install Prometheus.
+	docker-compose -p prometheus -f services/prometheus.yml up -d
+.PHONY: prometheus
+
 setup: ##@setup run all setup tasks
 	$(MAKE) ansible
 	$(MAKE) jumphost
