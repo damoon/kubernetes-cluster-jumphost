@@ -1,0 +1,32 @@
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.auth.basic]
+    users = ["test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/"]
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.auth.basic]
+    users = ["test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/"]
+    [entryPoints.https.tls]
+
+[web]
+address = ":8080"
+
+[acme]
+email = "test@test.com"
+storage = "/etc/traefik/acme/acme.json"
+entryPoint = "https"
+caServer = "https://acme-staging.api.letsencrypt.org/directory"
+#dnsProvider = "cloudflare"
+#onDemand=true
+#onHostRule=true
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "172.28.128.4.xip.io"
+watch = true
+exposedbydefault = false

@@ -1,0 +1,21 @@
+traefik:
+  image: traefik:v1.1.1
+  entrypoint:
+    - /traefik
+    - -c
+    - /etc/traefik/traefik.toml
+  ports:
+    - "80:80"
+    - "443:443"
+#  environment:
+#    - CLOUDFLARE_EMAIL=
+#    - CLOUDFLARE_API_KEY=
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./traefik/traefik.toml:/etc/traefik/traefik.toml
+    - /srv/traefik/acme:/etc/traefik/acme/
+  labels:
+    - "traefik.backend=traefik"
+    - "traefik.frontend.rule=Host:traefik"
+    - "traefik.enable=true"
+    - "traefik.port=8080"

@@ -23,6 +23,10 @@ help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 .PHONY: help
 
+traefik: ##@services Install traefik.
+	docker-compose -p traefik -f services/traefik.yml up -d
+.PHONY: traefik
+
 setup: ##@setup run all setup tasks
 	$(MAKE) ansible
 	$(MAKE) jumphost
