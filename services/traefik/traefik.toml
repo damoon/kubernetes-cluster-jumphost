@@ -27,6 +27,6 @@ caServer = "https://acme-staging.api.letsencrypt.org/directory"
 
 [docker]
 endpoint = "unix:///var/run/docker.sock"
-domain = "172.28.128.4.xip.io"
+domain = "docker.localhost"
 watch = true
 exposedbydefault = false
