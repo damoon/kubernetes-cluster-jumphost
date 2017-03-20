@@ -29,6 +29,10 @@ traefik: ##@services Install traefik.
 	docker-compose -p traefik -f services/traefik.yml up -d
 .PHONY: traefik
 
+icinga: ##@services Install traefik.
+	docker-compose -p icinga -f services/icinga.yml up
+.PHONY: icinga
+
 prometheus: ##@services Install Prometheus.
 	docker-compose -p prometheus -f services/prometheus.yml up -d
 .PHONY: prometheus
