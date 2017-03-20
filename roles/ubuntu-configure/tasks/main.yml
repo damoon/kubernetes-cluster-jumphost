@@ -1,3 +1,0 @@
----
-- name: remove motd help text
-  file: dest=/etc/update-motd.d/10-help-text state=absent
