@@ -6,6 +6,8 @@ RESET  := $(shell tput -Txterm sgr0)
 
 export DOMAIN_NAME = 172.28.128.4.xip.io
 
+SERVICES ?=
+
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
 # A category can be added with @category
@@ -25,21 +27,10 @@ help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 .PHONY: help
 
-traefik: ##@services Install traefik.
-	docker-compose -p traefik -f services/traefik.yml up -d
-.PHONY: traefik
-
-icinga: ##@services Install traefik.
-	docker-compose -p icinga -f services/icinga.yml up
-.PHONY: icinga
-
-prometheus: ##@services Install Prometheus.
-	docker-compose -p prometheus -f services/prometheus.yml up -d
-.PHONY: prometheus
-
 setup: ##@setup run all setup tasks
 	$(MAKE) ansible
 	$(MAKE) jumphost
+	$(MAKE) services
 .PHONY: setup
 
 ansible: ##@setup install ansible
@@ -50,7 +41,13 @@ ansible: ##@setup install ansible
 
 jumphost: ##@setup build the jumphost
 	ansible-playbook -i inventory jumphost.yml
+	sudo usermod -aG docker $USER
+	newgrp docker
 .PHONY: jumphost
+
+services: ##@setup install services (defined via SERVICES)
+	docker-compose -p jumphost -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml up $(SERVICES) -d
+.PHONY: services
 
 fix-locals: ##@other fix locals if missing for perl
 	export LANGUAGE=en_US.UTF-8
