@@ -43,9 +43,9 @@ setup: ##@setup run all setup tasks
 .PHONY: setup
 
 ansible: ##@setup install ansible
-	add-apt-repository ppa:ansible/ansible
-	apt-get update
-	apt-get install -y ansible
+	sudo add-apt-repository ppa:ansible/ansible
+	sudo apt-get update
+	sudo apt-get install -y ansible
 .PHONY: ansible
 
 jumphost: ##@setup build the jumphost
