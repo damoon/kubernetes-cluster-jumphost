@@ -1,0 +1,20 @@
+
+grafana:
+  image: grafana/grafana:3.1.1
+  environment:
+    - GF_SECURITY_ADMIN_PASSWORD=admin
+    #            - GF_AUTH_DISABLE_LOGIN_FORM=true
+    - GF_AUTH_BASIC_ENABLED=false
+    #            - GF_AUTH_PROXY_ENABLED=true
+    #            - GF_AUTH_ANONYMOUS_ENABLED=true
+    #            - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+  links:
+    - prometheus
+    - graphite
+  volumes:
+    - /srv/prometheus/grafana:/var/lib/grafana
+  labels:
+    - "traefik.backend=grafana"
+    - "traefik.frontend.rule=Host:grafana.${DOMAIN_NAME}"
+    - "traefik.enable=true"
+    - "traefik.port=3000"

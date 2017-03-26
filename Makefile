@@ -5,6 +5,7 @@ YELLOW := $(shell tput -Txterm setaf 3)
 RESET  := $(shell tput -Txterm sgr0)
 
 export DOMAIN_NAME = 172.28.128.4.xip.io
+SERVICE_FILES = -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml -f services/runbook.yml -f services/grafana.yml
 
 SERVICES ?=
 
@@ -46,11 +47,11 @@ jumphost: ##@setup build the jumphost
 .PHONY: jumphost
 
 up: ##@services start services (defined via SERVICES)
-	docker-compose -p jumphost -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml -f services/runbook.yml up -d $(SERVICES)
+	docker-compose -p jumphost $(SERVICE_FILES) up -d $(SERVICES)
 .PHONY: services
 
 logs: ##@services follow logs of services (defined via SERVICES)
-	docker-compose -p jumphost -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml -f services/runbook.yml logs -f $(SERVICES)
+	docker-compose -p jumphost $(SERVICE_FILES) logs -f $(SERVICES)
 .PHONY: services
 
 fix-locals: ##@other fix locals if missing for perl
