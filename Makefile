@@ -45,8 +45,12 @@ jumphost: ##@setup build the jumphost
 	newgrp docker
 .PHONY: jumphost
 
-services: ##@setup install services (defined via SERVICES)
+up: ##@services start services (defined via SERVICES)
 	docker-compose -p jumphost -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml -f services/runbook.yml up -d $(SERVICES)
+.PHONY: services
+
+logs: ##@services follow logs of services (defined via SERVICES)
+	docker-compose -p jumphost -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml -f services/runbook.yml logs -f $(SERVICES)
 .PHONY: services
 
 fix-locals: ##@other fix locals if missing for perl
