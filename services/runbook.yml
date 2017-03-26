@@ -1,0 +1,25 @@
+rethinkdb:
+  image: rethinkdb:2.3.5
+  volumes:
+    - /srv/runbook/rethinkdb:/data
+  labels:
+    - "traefik.backend=rethinkdb"
+    - "traefik.frontend.rule=Host:rethinkdb.${DOMAIN_NAME}"
+    - "traefik.enable=true"
+    - "traefik.port=8080"
+
+redis:
+  image: redis:3.2.5-alpine
+  volumes:
+    - /srv/runbook/redis:/data
+
+runbook:
+  image: runbook/runbook:latest
+  links:
+    - rethinkdb
+    - redis
+  labels:
+    - "traefik.backend=runbook"
+    - "traefik.frontend.rule=Host:runbook.${DOMAIN_NAME}"
+    - "traefik.enable=true"
+    - "traefik.port=8000"

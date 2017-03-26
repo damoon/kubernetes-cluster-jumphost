@@ -46,7 +46,7 @@ jumphost: ##@setup build the jumphost
 .PHONY: jumphost
 
 services: ##@setup install services (defined via SERVICES)
-	docker-compose -p jumphost -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml up $(SERVICES) -d
+	docker-compose -p jumphost -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml -f services/runbook.yml up -d $(SERVICES)
 .PHONY: services
 
 fix-locals: ##@other fix locals if missing for perl
