@@ -54,14 +54,6 @@ logs: ##@services follow logs of services (defined via SERVICES)
 	docker-compose -p jumphost $(SERVICE_FILES) logs -f $(SERVICES)
 .PHONY: services
 
-fix-locals: ##@other fix locals if missing for perl
-	export LANGUAGE=en_US.UTF-8
-	export LANG=en_US.UTF-8
-	export LC_ALL=en_US.UTF-8
-	locale-gen en_US.UTF-8
-	dpkg-reconfigure locales
-.PHONY: fix-locals
-
 noop: ##@other add nake autocompletion with: complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
 	echo :D
 .PHONY: noop
