@@ -42,7 +42,7 @@ ansible: ##@setup install ansible
 
 jumphost: ##@setup build the jumphost
 	ansible-playbook -i inventory jumphost.yml
-	sudo usermod -aG docker $USER
+	sudo usermod -aG docker ${USER}
 	newgrp docker
 .PHONY: jumphost
 
