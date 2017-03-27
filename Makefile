@@ -5,7 +5,7 @@ YELLOW := $(shell tput -Txterm setaf 3)
 RESET  := $(shell tput -Txterm sgr0)
 
 export DOMAIN_NAME = 172.28.128.4.xip.io
-SERVICE_FILES = -f services/traefik.yml -f services/icinga.yml -f services/prometheus.yml -f services/runbook.yml -f services/grafana.yml
+SERVICE_FILES = $(shell find services/ -mindepth 1 -maxdepth 1 -type f -print0 -name '*.yml' | xargs -0 -I {} echo -n "-f {} ")
 
 SERVICES ?=
 
