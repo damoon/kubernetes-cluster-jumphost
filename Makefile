@@ -7,6 +7,8 @@ RESET  := $(shell tput -Txterm sgr0)
 export DOMAIN_NAME = 172.28.128.4.xip.io
 SERVICE_FILES = $(shell find services/ -mindepth 1 -maxdepth 1 -type f -print0 -name '*.yml' | xargs -0 -I {} echo -n "-f {} ")
 
+export GID = `id -g ${UID}`
+
 SERVICES ?=
 
 # Add the following 'help' target to your Makefile

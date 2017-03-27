@@ -1,0 +1,15 @@
+syncthing:
+  image: linuxserver/syncthing:49
+  ports:
+    - "22000:22000"
+    - "21027:21027/udp"
+  environment:
+    - PUID=${UID}
+    - PGID=${GID}
+  volumes:
+    - /srv/syncthing:/config
+  labels:
+    - "traefik.backend=syncthing"
+    - "traefik.frontend.rule=Host:syncthing.${DOMAIN_NAME}"
+    - "traefik.enable=true"
+    - "traefik.port=8384"
