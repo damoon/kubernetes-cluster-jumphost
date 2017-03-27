@@ -1,0 +1,9 @@
+dokuwiki:
+  image: davedamoon/dokuwiki:2
+  volumes:
+    - /srv/dokuwiki:/var/dokuwiki-storage
+  labels:
+    - "traefik.backend=dokuwiki"
+    - "traefik.frontend.rule=Host:dokuwiki.${DOMAIN_NAME}"
+    - "traefik.enable=true"
+    - "traefik.port=80"
