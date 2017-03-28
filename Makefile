@@ -64,7 +64,3 @@ clean: ##@services remove services (defined via SERVICES)
 logs: ##@services follow logs of services (defined via SERVICES)
 	docker-compose -p jumphost $(SERVICE_FILES) logs -f $(SERVICES)
 .PHONY: services
-
-noop: ##@other add nake autocompletion with: complete -W "\`grep -oE '^[a-zA-Z0-9_-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_-]*$//'\`" make
-	echo :D
-.PHONY: noop
