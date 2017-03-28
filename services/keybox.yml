@@ -1,0 +1,11 @@
+keybox:
+  image: adito/keybox:2.86.00
+  volumes:
+    - /srv/keybox:/a/keydb
+  ports:
+    - "8443:8443"
+  labels:
+    - "traefik.backend=keybox"
+    - "traefik.frontend.rule=Host:keybox.${DOMAIN_NAME}"
+    - "traefik.enable=true"
+    - "traefik.port=80"
