@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "172.28.128.4"
   config.ssh.pty = true
   config.vm.provision "shell", inline: "echo 'cd /vagrant/' >> /home/vagrant/.bashrc"
-  config.vm.provision "shell", inline: "echo 'cd /vagrant/etc && ./fix-locals.sh'"
+  ENV['LC_ALL']="en_US.UTF-8"
   config.vm.hostname = "jumphost.172.28.128.4.xip.io"
   config.vm.provider :virtualbox do |vb, override|
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
