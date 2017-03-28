@@ -7,7 +7,8 @@ RESET  := $(shell tput -Txterm sgr0)
 export DOMAIN_NAME = 172.28.128.4.xip.io
 SERVICE_FILES = $(shell find services/ -mindepth 1 -maxdepth 1 -type f -print0 -name '*.yml' | xargs -0 -I {} echo -n "-f {} ")
 
-export GID = `id -g ${UID}`
+export UID = `id -u`
+export GID = `id -g $UID`
 
 SERVICES ?=
 
@@ -48,8 +49,16 @@ jumphost: ##@setup build the jumphost
 	newgrp docker
 .PHONY: jumphost
 
-up: ##@services start services (defined via SERVICES)
+start: ##@services start services (defined via SERVICES)
 	docker-compose -p jumphost $(SERVICE_FILES) up -d $(SERVICES)
+.PHONY: services
+
+stop: ##@services stop services (defined via SERVICES)
+	docker-compose -p jumphost $(SERVICE_FILES) stop $(SERVICES)
+.PHONY: services
+
+clean: ##@services remove services (defined via SERVICES)
+	docker-compose -p jumphost $(SERVICE_FILES) rm -f $(SERVICES)
 .PHONY: services
 
 logs: ##@services follow logs of services (defined via SERVICES)
