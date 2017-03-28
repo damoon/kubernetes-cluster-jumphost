@@ -7,8 +7,8 @@ RESET  := $(shell tput -Txterm sgr0)
 export DOMAIN_NAME = 172.28.128.4.xip.io
 SERVICE_FILES = $(shell find services/ -mindepth 1 -maxdepth 1 -type f -print0 -name '*.yml' | xargs -0 -I {} echo -n "-f {} ")
 
-export UID = `id -u`
-export GID = `id -g $UID`
+export UID = $(shell id -u)
+export GID = $(shell id -g $(UID))
 
 SERVICES ?=
 
@@ -31,22 +31,13 @@ help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 .PHONY: help
 
-setup: ##@setup run all setup tasks
-	$(MAKE) ansible
-	$(MAKE) jumphost
-	$(MAKE) services
-.PHONY: setup
-
 ansible: ##@setup install ansible
-	sudo add-apt-repository ppa:ansible/ansible
-	sudo apt-get update
-	sudo apt-get install -y ansible
+	./etc/install-ansible.sh
 .PHONY: ansible
 
 jumphost: ##@setup build the jumphost
 	ansible-playbook -i inventory jumphost.yml
-	sudo usermod -aG docker ${USER}
-	newgrp docker
+	groups | grep docker >/dev/null || ( sudo usermod -aG docker `whoami` && newgrp docker )
 .PHONY: jumphost
 
 start: ##@services start services (defined via SERVICES)
